@@ -134,6 +134,9 @@ fn test_wayland_display() -> Option<libloading::Library> {
     /* We try to connect and disconnect here to simply ensure there
      * is an active wayland display available.
      */
+    if std::env::var("WAYLAND_DISPLAY").is_err() {
+        return None;
+    }
     log::info!("Loading Wayland library to get the current display");
     let library = unsafe {
         let client_library = find_library(&["libwayland-client.so.0", "libwayland-client.so"])?;
